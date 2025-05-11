@@ -248,38 +248,37 @@ fn test_should_panic_activate_switch_aggregator() {
 }
 // Tests to check for events!
 
-// #[test]
-// fn test_should_emit_increase_count_aggregator() {
+#[test]
+fn test_should_emit_increase_count_aggregator() {
+    let (_, _, aggregator_dispatcher, _) = deploy_contract();
 
-//     let (_, _, aggregator_dispatcher, _) = deploy_contract();
+    let mut spy = spy_events();
 
-//     let  mut spy = spy_events();
+    //start prank as owner
+    start_cheat_caller_address(aggregator_dispatcher.contract_address, OWNER());
 
-//     //start prank as owner
-//     start_cheat_caller_address(aggregator_dispatcher.contract_address, OWNER());
+    let balance_1 = aggregator_dispatcher.get_count();
+    assert(balance_1 == 0, 'wrong starting balance');
 
-//     let balance_1 = aggregator_dispatcher.get_count();
-//     assert(balance_1 == 0, 'wrong starting balance');
+    //increase count
+    aggregator_dispatcher.increase_count(42);
 
-//     //increase count
-//     aggregator_dispatcher.increase_count(42);
+    let balance_after = aggregator_dispatcher.get_count();
+    //check balance to be sure increase occured
+    assert(balance_after == 42, 'wrong new balance');
+    stop_cheat_caller_address(aggregator_dispatcher.contract_address);
 
-//     let balance_after = aggregator_dispatcher.get_count();
-//     //check balance to be sure increase occured
-//     assert(balance_after == 42, 'wrong new balance');
-//     stop_cheat_caller_address(aggregator_dispatcher.contract_address);
+    //check for event
+    // Assert using event enum
+    use cohort_4::aggregator::Aggregator::Event;
+    use cohort_4::aggregator::Aggregator::CountIncreased;
 
-//     //check for event
-//     // Assert using event enum
-//     use cohort_4::aggregator::Aggregator::Event;
-//     use cohort_4::aggregator::Aggregator::CountIncreased;
+    let expected_event = Event::CountIncreased(
+        CountIncreased { new_count: balance_after, caller: OWNER() },
+    );
 
-//     let expected_event = Event::CountIncreased(CountIncreased) { new_count: balance_after,
-//     caller: OWNER() };
-
-//      // Assert the event was emitted
-//      spy.assert_emitted(@array![(aggregator_dispatcher.contract_address, expected_event)]);
-
-// }
-
+    
+    // Assert the event was emitted
+    spy.assert_emitted(@array![(aggregator_dispatcher.contract_address, expected_event)]);
+}
 

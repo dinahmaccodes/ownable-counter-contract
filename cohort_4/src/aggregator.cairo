@@ -1,5 +1,3 @@
-
-
 #[starknet::interface]
 pub trait IAggregator<TContractState> {
     // Increase contract count.
@@ -16,7 +14,7 @@ pub trait IAggregator<TContractState> {
 
 /// Simple contract for managing count.
 #[starknet::contract]
-mod Aggregator {
+pub mod Aggregator {
     use cohort_4::counter::{ICounterDispatcher, ICounterDispatcherTrait};
     use cohort_4::killswitch::{IKillSwitchDispatcher, IKillSwitchDispatcherTrait};
     use cohort_4::ownable::{IOwnableDispatcher, IOwnableDispatcherTrait};
