@@ -1,3 +1,6 @@
+use cohort_4::aggregator::Aggregator::{
+    CountDecreasedByOne, CountIncreased, CounterCountIncreased, Event, SwitchStatus,
+};
 use cohort_4::aggregator::{IAggregatorDispatcher, IAggregatorDispatcherTrait};
 use cohort_4::counter::{
     ICounterDispatcher, ICounterDispatcherTrait, ICounterSafeDispatcher,
