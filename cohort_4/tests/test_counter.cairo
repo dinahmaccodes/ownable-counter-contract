@@ -1,6 +1,5 @@
 use super::*;
 
-
 #[test]
 fn test_initial_count_balance() {
     let (counter_dispatcher, _, _, _) = deploy_contract();

@@ -1,7 +1,7 @@
 use cohort_4::aggregator::Aggregator::{
     CountDecreasedByOne, CountIncreased, CounterCountIncreased, Event, SwitchStatus,
 };
-use cohort_4::aggregator::{IAggregatorDispatcher, IAggregatorDispatcherTrait};
+use cohort_4::aggregator::{IAggregatorDispatcher, IAggregatorDispatcherTrait,};
 use cohort_4::counter::{
     ICounterDispatcher, ICounterDispatcherTrait, ICounterSafeDispatcher,
     ICounterSafeDispatcherTrait,
@@ -9,11 +9,12 @@ use cohort_4::counter::{
 use cohort_4::killswitch::{IKillSwitchDispatcher, IKillSwitchDispatcherTrait};
 use cohort_4::ownable::{IOwnableDispatcher, IOwnableDispatcherTrait};
 use core::traits::TryInto;
+use core::num::traits::Zero;
 use snforge_std::{
     ContractClassTrait, DeclareResultTrait, EventSpyAssertionsTrait, declare, spy_events,
     start_cheat_caller_address, stop_cheat_caller_address,
 };
-use starknet::{ContractAddress, contract_address_const};
+use starknet::ContractAddress;
 pub mod test_aggregator;
 pub mod test_counter;
 pub mod test_killswitch;
@@ -84,4 +85,8 @@ fn NON_OWNER() -> ContractAddress {
 
 fn NEW_OWNER() -> ContractAddress {
     'NEW_OWNER'.try_into().unwrap()
+}
+
+fn zero_address() -> ContractAddress {
+    Zero::zero()
 }
