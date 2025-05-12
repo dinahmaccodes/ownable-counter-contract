@@ -163,11 +163,10 @@ fn test_should_panic_increase_counter_count_aggregator() {
 #[should_panic(expect: 'Caller is not owner')]
 fn test_should_panic_decrease_count_by_one_aggregator() {
     let (_, _, aggregator_dispatcher, _) = deploy_contract();
-
+    // start prank as non-owner 
     start_cheat_caller_address(aggregator_dispatcher.contract_address, NON_OWNER());
     let count_before = aggregator_dispatcher.get_count();
     assert(count_before == 0, 'intial count is not zero');
-
     aggregator_dispatcher.increase_count(58);
     aggregator_dispatcher.decrease_count_by_one();
 

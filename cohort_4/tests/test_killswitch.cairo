@@ -3,7 +3,6 @@ use super::*;
 #[test]
 fn test_use_switch() {
     let (_, killswitch_dispatcher, _, _) = deploy_contract();
-    // check kill status_
     let status = killswitch_dispatcher.get_status();
     assert(!status, 'switch status failed');
 
